@@ -30,8 +30,6 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String requestApiKey = request.getHeader("X-API-KEY");
         String requestApiSecret = request.getHeader("X-API-SECRET");
-        System.out.println("requestApiKey "+requestApiKey);
-        System.out.println("requestApiSecret "+requestApiSecret);
         if (apiKey.equals(requestApiKey) && apiSecret.equals(requestApiSecret)) {
             var authenticationToken = new UsernamePasswordAuthenticationToken(requestApiKey,
                     requestApiKey, Collections.emptyList());

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/game-love")
+@RequestMapping("gamelove/v1")
 public class GameController {
 
     @Autowired
@@ -23,22 +23,22 @@ public class GameController {
         return ResponseEntity.ok("Success");
     }
 
-    @PostMapping(value = "/create")
-    public void createLoveEntry(@RequestParam String playerId, @RequestParam String gameId) {
+    @PostMapping(value = "/entries/{playerId}/{gameId}")
+    public void createLoveEntry(@PathVariable String playerId, @PathVariable String gameId) {
         gameLoveService.createLoveEntry(playerId, gameId);
     }
 
-    @DeleteMapping(value = "/unlove", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/entries/{playerId}/{gameId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void unloveGame(@RequestParam String playerId, @RequestParam String gameId) {
         gameLoveService.unloveGame(playerId, gameId);
     }
 
-    @GetMapping(value = "/loved-games/{playerId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/loves/{playerId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> fetchLovedGames(@PathVariable String playerId) {
         return gameLoveService.fetchLovedGames(playerId);
     }
 
-    @GetMapping(value = "/most-loved-games", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/lovedgames", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<MostLovedGameResponse> fetchMostLovedGames(@RequestParam int limit) throws Exception {
         return gameLoveService.fetchMostLovedGames(limit);
     }
